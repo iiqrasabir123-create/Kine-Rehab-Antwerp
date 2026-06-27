@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MotionWell Physiotherapy — Restore. Move. Thrive.</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --sage:     #4A6B5B;
+    --sage-lt:  #6B9080;
+    --cream:    #F7F4EF;
+    --charcoal: #1C2420;
+    --warm:     #C8B49A;
+    --warm-lt:  #EDE3D8;
+    --white:    #FFFFFF;
+    --text-muted: #6B7870;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 6%;
+    background: rgba(247, 244, 239, 0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(74,107,91,0.12);
+    transition: box-shadow 0.3s;
+  }
+  .nav-logo {
+    font-family: 'Fraunces', serif;
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--sage);
+    letter-spacing: -0.02em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--charcoal);
+    font-size: 0.875rem; font-weight: 400;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--sage); }
+  .nav-cta {
+    background: var(--sage); color: var(--white);
+    border: none; padding: 0.6rem 1.4rem;
+    border-radius: 2rem; font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem; cursor: pointer;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--charcoal); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 5rem;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 5rem 6% 5rem 6%;
+  }
+  .hero-eyebrow {
+    font-size: 0.75rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--sage-lt);
+    margin-bottom: 1.5rem; font-weight: 500;
+  }
+  .hero-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(3rem, 5vw, 5rem);
+    font-weight: 300;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    color: var(--charcoal);
+    margin-bottom: 1.5rem;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--sage);
+  }
+  .hero-sub {
+    font-size: 1.05rem; color: var(--text-muted);
+    max-width: 420px; line-height: 1.7;
+    margin-bottom: 2.5rem;
+  }
+  .hero-actions { display: flex; gap: 1rem; align-items: center; }
+  .btn-primary {
+    background: var(--sage); color: var(--white);
+    border: none; padding: 0.85rem 2rem;
+    border-radius: 2rem; font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem; cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--charcoal); transform: translateY(-1px); }
+  .btn-ghost {
+    background: transparent; color: var(--sage);
+    border: 1.5px solid var(--sage); padding: 0.85rem 2rem;
+    border-radius: 2rem; font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-ghost:hover { background: var(--sage); color: var(--white); }
+
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-top: 3rem;
+    padding-top: 2rem; border-top: 1px solid rgba(74,107,91,0.15);
+  }
+  .stat-num {
+    font-family: 'Fraunces', serif; font-size: 2rem;
+    font-weight: 500; color: var(--sage); display: block;
+  }
+  .stat-label { font-size: 0.8rem; color: var(--text-muted); }
+
+  .hero-right {
+    position: relative; overflow: hidden;
+    background: var(--warm-lt);
+  }
+  .hero-illustration {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-illustration svg { width: 80%; max-width: 440px; }
+
+  /* MARQUEE */
+  .marquee-strip {
+    background: var(--sage); color: var(--white);
+    padding: 0.9rem 0; overflow: hidden; white-space: nowrap;
+  }
+  .marquee-inner {
+    display: inline-flex; gap: 3rem;
+    animation: marquee 22s linear infinite;
+  }
+  .marquee-inner span {
+    font-size: 0.8rem; letter-spacing: 0.1em;
+    text-transform: uppercase; opacity: 0.85;
+  }
+  .marquee-dot { color: var(--warm); }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* SERVICES */
+  .section { padding: 6rem 6%; }
+  .section-label {
+    font-size: 0.72rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--sage-lt); margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif; font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 300; letter-spacing: -0.02em; line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+  .section-sub { color: var(--text-muted); max-width: 520px; font-size: 1rem; }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    margin-top: 4rem;
+    background: rgba(74,107,91,0.15);
+    border-radius: 1rem;
+    overflow: hidden;
+  }
+  .service-card {
+    background: var(--cream);
+    padding: 2.5rem 2rem;
+    transition: background 0.3s;
+    cursor: default;
+  }
+  .service-card:hover { background: var(--white); }
+  .service-icon {
+    width: 48px; height: 48px;
+    background: var(--warm-lt);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+  .service-icon svg { width: 24px; height: 24px; color: var(--sage); }
+  .service-name {
+    font-family: 'Fraunces', serif; font-size: 1.2rem;
+    font-weight: 500; margin-bottom: 0.75rem;
+  }
+  .service-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.65; }
+
+  /* ABOUT */
+  .about { background: var(--charcoal); color: var(--cream); }
+  .about-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center;
+  }
+  .about .section-label { color: var(--warm); }
+  .about .section-title { color: var(--white); }
+  .about .section-sub { color: rgba(247,244,239,0.65); }
+  .about-feature {
+    display: flex; gap: 1rem; margin-top: 2rem;
+    padding-top: 1.5rem; border-top: 1px solid rgba(247,244,239,0.1);
+  }
+  .about-feature + .about-feature { margin-top: 1.2rem; }
+  .about-feature-icon {
+    flex-shrink: 0; width: 36px; height: 36px;
+    background: rgba(200,180,154,0.15); border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .about-feature-text h4 { font-size: 0.95rem; margin-bottom: 0.2rem; font-weight: 500; }
+  .about-feature-text p { font-size: 0.85rem; color: rgba(247,244,239,0.55); }
+  .about-portrait {
+    background: var(--sage);
+    border-radius: 1.5rem;
+    min-height: 460px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .portrait-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, var(--sage) 0%, var(--sage-lt) 100%);
+    opacity: 0.7;
+  }
+  .portrait-svg { position: relative; z-index: 1; }
+
+  /* TESTIMONIALS */
+  .testimonials-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem; margin-top: 4rem;
+  }
+  .testimonial-card {
+    background: var(--white); border-radius: 1rem;
+    padding: 2rem; position: relative;
+  }
+  .testimonial-quote {
+    font-family: 'Fraunces', serif; font-size: 4rem;
+    color: var(--warm); line-height: 0.8; margin-bottom: 1rem;
+    font-style: italic;
+  }
+  .testimonial-text { font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1.5rem; }
+  .testimonial-author { display: flex; align-items: center; gap: 0.75rem; }
+  .author-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--warm-lt); display: flex; align-items: center; justify-content: center;
+    font-family: 'Fraunces', serif; font-weight: 500; color: var(--sage);
+  }
+  .author-name { font-weight: 500; font-size: 0.9rem; }
+  .author-sub { font-size: 0.78rem; color: var(--text-muted); }
+  .stars { color: var(--warm); font-size: 0.85rem; margin-bottom: 0.75rem; }
+
+  /* BOOKING */
+  .booking { background: var(--sage); color: var(--white); text-align: center; }
+  .booking .section-title { color: var(--white); margin-bottom: 1rem; }
+  .booking-sub { color: rgba(255,255,255,0.75); max-width: 460px; margin: 0 auto 2.5rem; }
+  .booking-form {
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    max-width: 600px; margin: 0 auto;
+  }
+  .booking-form input, .booking-form select {
+    flex: 1; min-width: 180px;
+    padding: 0.85rem 1.2rem; border-radius: 2rem;
+    border: none; font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem; background: rgba(255,255,255,0.15);
+    color: var(--white); outline: none;
+  }
+  .booking-form input::placeholder { color: rgba(255,255,255,0.6); }
+  .booking-form select option { color: var(--charcoal); background: var(--white); }
+  .btn-book {
+    background: var(--white); color: var(--sage);
+    border: none; padding: 0.85rem 2rem; border-radius: 2rem;
+    font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
+    font-weight: 500; cursor: pointer; transition: all 0.2s;
+  }
+  .btn-book:hover { background: var(--charcoal); color: var(--white); }
+
+  /* FOOTER */
+  footer {
+    background: var(--charcoal); color: rgba(247,244,239,0.6);
+    padding: 3rem 6%;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-logo {
+    font-family: 'Fraunces', serif; font-size: 1.1rem;
+    color: var(--cream);
+  }
+  .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+  .footer-links a { color: rgba(247,244,239,0.5); text-decoration: none; font-size: 0.85rem; }
+  .footer-links a:hover { color: var(--cream); }
+  .footer-copy { font-size: 0.8rem; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .about-inner { grid-template-columns: 1fr; }
+    .about-portrait { min-height: 260px; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    nav .nav-links { display: none; }
+  }
+  @media (max-width: 600px) {
+    .services-grid { grid-template-columns: 1fr; }
+    .hero-stats { flex-wrap: wrap; gap: 1.5rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-inner { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">MotionWell</div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#booking">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Book Now</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <span class="hero-eyebrow">Certified Physiotherapist · Est. 2014</span>
+    <h1 class="hero-title">Your body<br>deserves to <em>move</em><br>without limits.</h1>
+    <p class="hero-sub">Expert, evidence-based physiotherapy for injury recovery, pain relief, and long-term movement health — tailored to you.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Book a Session</button>
+      <button class="btn-ghost" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">Our Services</button>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <span class="stat-num">2,400+</span>
+        <span class="stat-label">Patients treated</span>
+      </div>
+      <div>
+        <span class="stat-num">12 yrs</span>
+        <span class="stat-label">Clinical experience</span>
+      </div>
+      <div>
+        <span class="stat-num">97%</span>
+        <span class="stat-label">Satisfaction rate</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-illustration">
+      <!-- Elegant human movement illustration -->
+      <svg viewBox="0 0 440 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Background organic shapes -->
+        <ellipse cx="220" cy="280" rx="160" ry="200" fill="rgba(74,107,91,0.08)"/>
+        <circle cx="220" cy="100" r="50" fill="rgba(200,180,154,0.25)"/>
+        <!-- Figure: stylized running/stretching human -->
+        <!-- Head -->
+        <circle cx="245" cy="105" r="32" fill="#4A6B5B" opacity="0.85"/>
+        <!-- Body -->
+        <path d="M245 137 Q240 200 230 250 Q225 280 235 310" stroke="#4A6B5B" stroke-width="18" stroke-linecap="round" fill="none" opacity="0.8"/>
+        <!-- Left arm raised -->
+        <path d="M240 165 Q200 140 170 115" stroke="#6B9080" stroke-width="12" stroke-linecap="round" fill="none"/>
+        <!-- Right arm down -->
+        <path d="M245 170 Q280 200 300 230" stroke="#6B9080" stroke-width="12" stroke-linecap="round" fill="none"/>
+        <!-- Left leg -->
+        <path d="M232 308 Q215 350 205 395 Q200 415 210 435" stroke="#4A6B5B" stroke-width="14" stroke-linecap="round" fill="none" opacity="0.8"/>
+        <!-- Right leg forward -->
+        <path d="M238 308 Q255 355 270 395 Q282 420 275 440" stroke="#4A6B5B" stroke-width="14" stroke-linecap="round" fill="none" opacity="0.8"/>
+        <!-- Motion lines -->
+        <path d="M160 200 Q140 195 125 198" stroke="rgba(200,180,154,0.6)" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="4 4"/>
+        <path d="M158 215 Q135 212 118 216" stroke="rgba(200,180,154,0.4)" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 5"/>
+        <!-- Decorative plus marks -->
+        <g opacity="0.4">
+          <line x1="380" y1="80" x2="380" y2="96" stroke="#C8B49A" stroke-width="2" stroke-linecap="round"/>
+          <line x1="372" y1="88" x2="388" y2="88" stroke="#C8B49A" stroke-width="2" stroke-linecap="round"/>
+          <line x1="80" y1="340" x2="80" y2="356" stroke="#4A6B5B" stroke-width="2" stroke-linecap="round"/>
+          <line x1="72" y1="348" x2="88" y2="348" stroke="#4A6B5B" stroke-width="2" stroke-linecap="round"/>
+        </g>
+        <!-- Ground shadow -->
+        <ellipse cx="240" cy="470" rx="80" ry="12" fill="rgba(74,107,91,0.12)"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-inner">
+    <span>Sports Injury Rehab</span><span class="marquee-dot">·</span>
+    <span>Manual Therapy</span><span class="marquee-dot">·</span>
+    <span>Postural Correction</span><span class="marquee-dot">·</span>
+    <span>Dry Needling</span><span class="marquee-dot">·</span>
+    <span>Post-Surgery Recovery</span><span class="marquee-dot">·</span>
+    <span>Chronic Pain Management</span><span class="marquee-dot">·</span>
+    <span>Workplace Ergonomics</span><span class="marquee-dot">·</span>
+    <span>Neurological Rehab</span><span class="marquee-dot">·</span>
+    <!-- Duplicate for seamless loop -->
+    <span>Sports Injury Rehab</span><span class="marquee-dot">·</span>
+    <span>Manual Therapy</span><span class="marquee-dot">·</span>
+    <span>Postural Correction</span><span class="marquee-dot">·</span>
+    <span>Dry Needling</span><span class="marquee-dot">·</span>
+    <span>Post-Surgery Recovery</span><span class="marquee-dot">·</span>
+    <span>Chronic Pain Management</span><span class="marquee-dot">·</span>
+    <span>Workplace Ergonomics</span><span class="marquee-dot">·</span>
+    <span>Neurological Rehab</span><span class="marquee-dot">·</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="section" id="services">
+  <div class="section-label">What we treat</div>
+  <h2 class="section-title">Targeted care for<br>every kind of pain.</h2>
+  <p class="section-sub">From acute sports injuries to chronic conditions — we build a treatment plan around how your body actually moves.</p>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      </div>
+      <div class="service-name">Sports Rehabilitation</div>
+      <p class="service-desc">Evidence-based recovery for sprains, muscle tears, joint injuries, and overuse conditions — helping athletes return stronger.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2z"/><path d="M12 8v4l3 3"/></svg>
+      </div>
+      <div class="service-name">Chronic Pain Relief</div>
+      <p class="service-desc">Long-term management of back pain, neck pain, arthritis, and fibromyalgia with a blend of manual and therapeutic techniques.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M9 12l2 2 4-4"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
+      </div>
+      <div class="service-name">Post-Surgical Recovery</div>
+      <p class="service-desc">Structured rehabilitation following joint replacements, ligament repairs, spinal surgeries, and other procedures.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div class="service-name">Postural & Ergonomics</div>
+      <p class="service-desc">Assessment and correction of poor posture, workplace-related strain, and repetitive stress injuries from desk or manual work.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 00-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 012-3.95A12.88 12.88 0 0122 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 01-4 2z"/></svg>
+      </div>
+      <div class="service-name">Dry Needling</div>
+      <p class="service-desc">Targeted myofascial release using fine needles to deactivate trigger points, reduce tension, and improve muscle function.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+      </div>
+      <div class="service-name">Neurological Rehab</div>
+      <p class="service-desc">Specialised programmes for patients recovering from stroke, Parkinson's disease, multiple sclerosis, and vestibular disorders.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section about" id="about">
+  <div class="about-inner">
+    <div>
+      <div class="section-label">About the practice</div>
+      <h2 class="section-title">Where clinical<br>science meets<br>human care.</h2>
+      <p class="section-sub" style="margin-bottom:0">MotionWell was founded on one belief: that effective physiotherapy listens first. Every patient's pain has a story — we take time to understand yours before we treat it.</p>
+      <div class="about-feature">
+        <div class="about-feature-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8B49A" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div class="about-feature-text">
+          <h4>MSc Physiotherapy, University of Manchester</h4>
+          <p>Advanced clinical training with 12 years of hands-on practice across NHS and private settings.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="about-feature-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8B49A" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="about-feature-text">
+          <h4>Worked with professional sports teams</h4>
+          <p>Experience in elite athlete management, including Premier League football and Olympic sports programmes.</p>
+        </div>
+      </div>
+      <div class="about-feature">
+        <div class="about-feature-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8B49A" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div class="about-feature-text">
+          <h4>Home visits available</h4>
+          <p>For patients with limited mobility, we bring the clinic to you — fully equipped and ready to treat.</p>
+        </div>
+      </div>
+    </div>
+    <div class="about-portrait">
+      <div class="portrait-bg"></div>
+      <svg class="portrait-svg" width="220" height="320" viewBox="0 0 220 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Stylised therapist figure -->
+        <circle cx="110" cy="68" r="42" fill="rgba(247,244,239,0.25)"/>
+        <circle cx="110" cy="64" r="36" fill="rgba(247,244,239,0.4)"/>
+        <!-- Body -->
+        <path d="M110 100 Q105 160 100 210 Q96 240 108 260" stroke="rgba(247,244,239,0.5)" stroke-width="20" stroke-linecap="round" fill="none"/>
+        <!-- White coat / uniform suggestion -->
+        <rect x="80" y="110" width="60" height="90" rx="10" fill="rgba(247,244,239,0.15)"/>
+        <path d="M80 130 Q60 160 50 190" stroke="rgba(247,244,239,0.4)" stroke-width="10" stroke-linecap="round" fill="none"/>
+        <path d="M140 130 Q158 165 168 192" stroke="rgba(247,244,239,0.4)" stroke-width="10" stroke-linecap="round" fill="none"/>
+        <!-- Stethoscope hint -->
+        <path d="M98 120 Q85 140 90 155 Q95 165 104 162" stroke="rgba(200,180,154,0.7)" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <circle cx="104" cy="162" r="5" fill="rgba(200,180,154,0.7)"/>
+        <!-- Legs -->
+        <path d="M103 258 Q96 290 97 312" stroke="rgba(247,244,239,0.4)" stroke-width="14" stroke-linecap="round" fill="none"/>
+        <path d="M115 258 Q124 290 122 312" stroke="rgba(247,244,239,0.4)" stroke-width="14" stroke-linecap="round" fill="none"/>
+        <!-- Name badge -->
+        <rect x="100" y="138" width="30" height="18" rx="3" fill="rgba(247,244,239,0.2)"/>
+        <line x1="104" y1="143" x2="126" y2="143" stroke="rgba(247,244,239,0.5)" stroke-width="1.5"/>
+        <line x1="104" y1="148" x2="122" y2="148" stroke="rgba(247,244,239,0.3)" stroke-width="1.5"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section" id="testimonials">
+  <div class="section-label">Patient stories</div>
+  <h2 class="section-title">Real recoveries,<br>real results.</h2>
+
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <div class="testimonial-quote">"</div>
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">After my knee surgery, I was told I might not run again. Six months of sessions later, I completed a half marathon. The care and dedication here is unlike anything I've experienced.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">J</div>
+        <div>
+          <div class="author-name">James Harrington</div>
+          <div class="author-sub">ACL reconstruction recovery</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-quote">"</div>
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">Three years of chronic lower back pain, and two sessions in, I already felt different. The treatment plan was explained clearly and adjusted as I progressed. Highly recommend.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">S</div>
+        <div>
+          <div class="author-name">Sara Mitchell</div>
+          <div class="author-sub">Chronic back pain patient</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-quote">"</div>
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">As a professional cyclist, I couldn't afford downtime. The sports rehab programme got me back on the bike 40% faster than expected — with better technique than before.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">R</div>
+        <div>
+          <div class="author-name">Ravi Okonkwo</div>
+          <div class="author-sub">Competitive cyclist</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section class="section booking" id="booking">
+  <div class="section-label" style="color: rgba(255,255,255,0.6)">Get started</div>
+  <h2 class="section-title">Book your first session.</h2>
+  <p class="booking-sub">Initial assessments are 60 minutes. We'll discuss your history, assess your movement, and map out a plan — no jargon, no rush.</p>
+  <div class="booking-form">
+    <input type="text" placeholder="Your name" aria-label="Your name"/>
+    <input type="email" placeholder="Email address" aria-label="Email address"/>
+    <select aria-label="Select service">
+      <option value="" disabled selected>Select service</option>
+      <option>Sports Rehabilitation</option>
+      <option>Chronic Pain Relief</option>
+      <option>Post-Surgical Recovery</option>
+      <option>Postural & Ergonomics</option>
+      <option>Dry Needling</option>
+      <option>Neurological Rehab</option>
+    </select>
+    <button class="btn-book">Request Booking</button>
+  </div>
+  <p style="margin-top:1.5rem; font-size:0.82rem; color:rgba(255,255,255,0.5)">Or call us directly: <strong style="color:rgba(255,255,255,0.8)">+44 20 7946 0123</strong></p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">MotionWell Physiotherapy</div>
+  <ul class="footer-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#booking">Contact</a></li>
+    <li><a href="#">Privacy</a></li>
+  </ul>
+  <div class="footer-copy">© 2026 MotionWell. All rights reserved.</div>
+</footer>
+
+<script>
+  // Subtle nav shadow on scroll
+  window.addEventListener('scroll', () => {
+    document.querySelector('nav').style.boxShadow =
+      window.scrollY > 20 ? '0 2px 20px rgba(28,36,32,0.08)' : 'none';
+  });
+
+  // Booking form feedback
+  document.querySelector('.btn-book').addEventListener('click', () => {
+    const btn = document.querySelector('.btn-book');
+    btn.textContent = '✓ Request Sent';
+    btn.style.background = '#4A6B5B';
+    btn.style.color = '#fff';
+    setTimeout(() => {
+      btn.textContent = 'Request Booking';
+      btn.style.background = '#fff';
+      btn.style.color = '#4A6B5B';
+    }, 3000);
+  });
+</script>
+</body>
+</html>
